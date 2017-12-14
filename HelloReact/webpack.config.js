@@ -52,6 +52,14 @@ module.exports = {
         ]
     },
 
+    resolve: {
+        modules: [
+            'node_modules',//关于路径的配置
+            path.resolve(__dirname, 'src/common'),
+            path.resolve(__dirname, 'src/components')
+        ]
+    },
+
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
