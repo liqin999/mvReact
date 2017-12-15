@@ -9,7 +9,7 @@ require("../semantic/dist/semantic.css");
 
 import Nav from 'nav/Nav.js'
 import CardWrap from 'cardWrap/CardWrap.js'
-
+import PropTypes from 'prop-types';
 
 let data = [
     {
@@ -38,11 +38,30 @@ let data = [
     }
 ];
 
+class App extends Component{
+
+    getChildContext(){
+        return {
+            et:'win'
+        }
+    }
+     render(){
+        let {data} = this.props;
+        return (
+            <div className="ui container">
+                 <Nav/>
+                 <CardWrap data={data}/>
+            </div>
+            )
+     }
+}
+
+App.childContextTypes = {
+    et:PropTypes.string
+}
+
 ReactDom.render(
-	    <div className="ui container">
- 			 <Nav/>
- 			 <CardWrap data={data}/>
-	    </div>,
+	 <App data={data}/> ,
 	document.getElementById("root")
 );
 

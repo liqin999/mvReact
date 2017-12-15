@@ -8,10 +8,16 @@ let propTypes={//后台传值检查组件的属性（类型检查）
     year:PropTypes.number,
     likeNum:PropTypes.number,
 };
+
+let contextTypes = {
+    et: PropTypes.string
+}
+
 export default class Card extends Component{
 // 写成动态的数据形式
 	render(){
 		let {imgSrc,name,meat,desc,year,likeNum} = this.props;
+        let {et} = this.context;
 		return (
             <div className="ui card">
                 <div className="image">
@@ -25,7 +31,7 @@ export default class Card extends Component{
                     <div className="description">{desc}</div>
                 </div>
                 <div className="extra content">
-                    <span> {`Joined in ${year}`} </span>
+                    <span> {`${et} in ${year}`} </span>
                     <span>
                         <i className="empty heart icon"></i> {`${likeNum} Like`} 
                     </span>
@@ -42,3 +48,4 @@ Card.defaultProps = {
 };
 
 Card.propTypes = propTypes;
+Card.contextTypes = contextTypes;
