@@ -8,7 +8,7 @@ export default class CardWrap extends Component{
 		//根据数据进行渲染Card组件 ...扩展运算符，将一个对象扩展到一个属性上
 		let cards =data.map((item,index)=>{//最终是根据数据返回的jsx元素
 			return (
-					<Card {...item}/>
+					<Card key={index} {...item}/>
 				)
 		})
 

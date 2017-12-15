@@ -1,4 +1,13 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+let propTypes={//后台传值检查组件的属性（类型检查）
+    imgSrc:PropTypes.string,
+    name:PropTypes.string,
+    meat:PropTypes.string,
+    desc:PropTypes.string,
+    year:PropTypes.number,
+    likeNum:PropTypes.number,
+};
 export default class Card extends Component{
 // 写成动态的数据形式
 	render(){
@@ -26,3 +35,10 @@ export default class Card extends Component{
 	}
 
 }
+
+// 为属性指定默认值:
+Card.defaultProps = {
+  name: 'defaultName'
+};
+
+Card.propTypes = propTypes;

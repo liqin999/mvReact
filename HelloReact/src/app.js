@@ -14,10 +14,10 @@ import CardWrap from 'cardWrap/CardWrap.js'
 let data = [
     {
         imgSrc: require('img/matthew.png'),
-        name: 'Matt',
+       /* name: 'Matt',*/
         meta: 'Friends',
         desc: 'Matthew is an interior designer living in New York.',
-        joined: 2013,
+        year: 2013,
         likeNum: 75
     },
     {
@@ -25,7 +25,7 @@ let data = [
         name: 'Molly',
         meta: 'Coworker',
         desc: 'Molly is a personal assistant living in Paris.',
-        joined: 2013,
+        year: 2013,
         likeNum: 35
     },
     {
@@ -33,7 +33,7 @@ let data = [
         name: 'Elyse',
         meta: 'Coworker',
         desc: 'Elyse is a copywriter working in New York.',
-        joined: 2014,
+        year: 2014,
         likeNum: 151
     }
 ];
