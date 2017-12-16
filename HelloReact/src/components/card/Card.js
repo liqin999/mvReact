@@ -12,12 +12,31 @@ let propTypes={//后台传值检查组件的属性（类型检查）
 let contextTypes = {
     et: PropTypes.string
 }
-
 export default class Card extends Component{
 // 写成动态的数据形式
+    constructor(props){//类中的构造函数
+        super(props);
+        this.state={isHasStar:false,starClass:"",year:props.year};//state是内部的状态管理
+        this.handleChangeStar = this.handleChangeStar.bind(this);
+        this.addYear = this.addYear.bind(this);
+    }
+    handleChangeStar(){//根据状态改变视图
+        this.state.isHasStar = !this.state.isHasStar;
+        this.state.starClass = this.state.isHasStar ? 'empty' :'';
+        this.setState({
+            isHasStar:this.state.isHasStar
+        });
+    }
+    addYear(){
+        let year = this.state.year;
+         this.setState({
+            year:year+1
+        });
+    }
 	render(){
-		let {imgSrc,name,meat,desc,year,likeNum} = this.props;
+		let {imgSrc,name,meat,desc,likeNum} = this.props;
         let {et} = this.context;
+        let {year} = this.state;//结构赋值 let的块级作用域
 		return (
             <div className="ui card">
                 <div className="image">
@@ -31,9 +50,12 @@ export default class Card extends Component{
                     <div className="description">{desc}</div>
                 </div>
                 <div className="extra content">
-                    <span> {`${et} in ${year}`} </span>
+                    <span
+                      onClick={this.addYear}
+                    > {`${et} in ${year}`}
+                     </span>
                     <span>
-                        <i className="empty heart icon"></i> {`${likeNum} Like`} 
+                        <i style={{cursor: 'pointer'}} onClick={this.handleChangeStar} className={`${this.state.starClass} heart icon`} ></i> {`${likeNum} Like`} 
                     </span>
                 </div>
             </div>
