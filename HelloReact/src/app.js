@@ -8,6 +8,7 @@ require("../semantic/dist/semantic.css");
 // 把一段代码封装成组件的形式   组件化的思想
 
 import Nav from 'nav/Nav.js'
+import Home from 'home/Home.js'
 import CardWrap from 'cardWrap/CardWrap.js'
 import PropTypes from 'prop-types';
 
@@ -39,18 +40,44 @@ let data = [
 ];
 
 class App extends Component{
+    constructor(props){
+        super(props);//根据状态的变化实现选项卡的功能
+        this.state = {
+            view:'home'
+        };
+        this.changeView = this.changeView.bind(this);//绑定this
 
+    }
     getChildContext(){
         return {
             et:'win'
         }
     }
-     render(){
+
+    changeView(view){//改变状态，然后渲染相应的组件视图
+        this.setState({
+            view:view
+        })
+    }
+
+     render(){//组件渲染到页面中
         let {data} = this.props;
+        let {view} = this.state;//使用结构赋值的形式取到对象中的值
+        let showComponent = null;
+        switch(view){
+            case 'home'://jsx的语法，可以将一个元素赋值给一个变量
+              showComponent = <Home />
+              break;
+            case 'list':
+               showComponent = <CardWrap data={data}/>
+               break;
+            default:
+        }
+
         return (
             <div className="ui container">
-                 <Nav/>
-                 <CardWrap data={data}/>
+                 <Nav changeView={this.changeView}/>
+                 {showComponent}//jsx语法的渲染
             </div>
             )
      }

@@ -11,7 +11,7 @@ export default class CardWrap extends Component{
 					<Card key={index} {...item}/>
 				)
 		})
-
+ 
 		return (
 			   <div className="ui cards">
 					{cards}
