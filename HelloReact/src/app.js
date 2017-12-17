@@ -54,7 +54,16 @@ class App extends Component{
         }
     }
 
-    changeView(view){//改变状态，然后渲染相应的组件视图
+    componentDidMount(){//组件第一次渲染的时候调用
+        console.log("App组件渲染")
+    }
+    componentDidUpdate(){//组件更新完成，状态改变触发组件更新
+         console.log("App组件更新")
+    }
+    componentWillUnmount(){//组件移除的时候调用
+       console.log("App组件被移除")
+    }
+        changeView(view){//改变状态，然后渲染相应的组件视图
         this.setState({
             view:view
         })
