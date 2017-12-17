@@ -15,6 +15,7 @@ export default class Home extends Component{
 	render(){
 		return(
 			<img 
+			style={{width:'350px'}}
 			 className="ui fluid image "
 			 src={require('img/128H.jpg')}
 			 alt=''

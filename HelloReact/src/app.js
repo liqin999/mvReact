@@ -12,6 +12,10 @@ import Home from 'home/Home.js'
 import CardWrap from 'cardWrap/CardWrap.js'
 import PropTypes from 'prop-types';
 
+//ui组件库
+import {ButtonToolbar,Button} from 'react-bootstrap';
+//bootstrap.Button
+
 let data = [
     {
         imgSrc: require('img/matthew.png'),
@@ -86,7 +90,8 @@ class App extends Component{
         return (
             <div className="ui container">
                  <Nav changeView={this.changeView}/>
-                 {showComponent}//jsx语法的渲染
+                 {showComponent}
+                 <Button bsStyle="success">Success</Button>
             </div>
             )
      }
