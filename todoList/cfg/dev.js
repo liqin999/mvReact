@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {dfPath, dfConfig } = require('./default.js');
 
 let config = Object.assign(dfConfig, {
-
+    
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
