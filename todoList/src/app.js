@@ -9,11 +9,13 @@ class App extends React.Component{
 constructor(props) {
     super(props);
     this.state={//数据的形式 id  value  hascompleted
-    	todoData:[]
+    	todoData:[],
+    	inputVal:''
     }
     this.handleKeyDownPost = this.handleKeyDownPost.bind(this);
     this.onDestory = this.onDestory.bind(this);
     this.onClearCompleted = this.onClearCompleted.bind(this);
+    this.changeInputVal = this.changeInputVal.bind(this);
  }
 
 handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据的形式 按下文本框的时候将值id
@@ -35,7 +37,7 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
     	todoData
     });
     ev.target.value = "";
-    console.log(this.state.todoData);
+
 }
 
 	onDestory(todo){//删除指定的元素
@@ -54,18 +56,23 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 		this.setState({todoData})
 
 	}
+	changeInputVal(ev){
+		this.setState({
+			inputVal:ev.target.value
+		})
+	}
 
 	render(){//render是元素的渲染的到页面中的行为
 		let items = null;
-		let {todoData} =this.state;
-		let {onDestory,onClearCompleted} = this;
+		let {todoData,inputVal} =this.state;
+		let {onDestory,onClearCompleted,changeInputVal} = this;
 		items = todoData.map((item,i)=>{// 根据数组的多少就行元素的创建
 			return (//将列表相关的属性数据和方法传递到子组件中
-					 <Item 
-					  {...{
-					  	onDestory,
-					  	todo:item
-					  }}  
+					 <Item onDestory={onDestory} todo={item}
+					  //{...{ 父组件向子组件传值的形式
+					  //	onDestory,
+					  //	todo:item
+					  //}}  
 					 key={i}/>
 				)
 		});
@@ -74,7 +81,12 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
            <div>
            	<header className='header'>
            		<h1>todos</h1>
-           		<input type="text" onKeyDown = {this.handleKeyDownPost} className='new-todo' />	
+           		<input type="text" 
+           		value={inputVal} 
+           		onChange={changeInputVal}
+           		onKeyDown = {this.handleKeyDownPost} 
+           		className='new-todo' 
+           		/>	
            	</header>
            	<section className='main'>
            	   <input type="checkbox" className='toggle-all' />
