@@ -10,12 +10,17 @@ constructor(props) {
     super(props);
     this.state={//数据的形式 id  value  hascompleted
     	todoData:[],
-    	inputVal:''
+    	inputVal:'',
+    	view:"all"
     }
     this.handleKeyDownPost = this.handleKeyDownPost.bind(this);
     this.onDestory = this.onDestory.bind(this);
     this.onClearCompleted = this.onClearCompleted.bind(this);
     this.changeInputVal = this.changeInputVal.bind(this);
+    this.toggleAll = this.toggleAll.bind(this);
+    this.onToggle = this.onToggle.bind(this);
+    this.changeView = this.changeView.bind(this);
+    
  }
 
 handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据的形式 按下文本框的时候将值id
@@ -36,7 +41,7 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
     this.setState({
     	todoData
     });
-    ev.target.value = "";
+   this.state.inputVal = "";
 
 }
 
@@ -54,7 +59,6 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 			 return  !item.hasCompleted;
 		})
 		this.setState({todoData})
-
 	}
 	changeInputVal(ev){
 		this.setState({
@@ -62,20 +66,92 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 		})
 	}
 
+	toggleAll(e){//将所有的状态选中
+		let {checked} = e.target;
+		let {todoData} =this.state;
+		todoData = todoData.map((el)=>{
+			el.hasCompleted = checked;
+			return el;
+		});
+	
+		this.setState({todoData})
+	}
+	onToggle(todo){//判断是哪一条的数据是被勾选上 实现动作的切换
+		let {todoData} = this.state;
+		todoData = todoData.map((el)=>{
+			if(todo.id == el.id){
+               el.hasCompleted = !el.hasCompleted;
+			}
+			 return el;//将状态修改好时候应将值返回出去
+		});
+		this.setState({todoData})
+	}
+
+	changeView(view){
+        this.setState({view})
+	}
+
 	render(){//render是元素的渲染的到页面中的行为
 		let items = null;
-		let {todoData,inputVal} =this.state;
-		let {onDestory,onClearCompleted,changeInputVal} = this;
-		items = todoData.map((item,i)=>{// 根据数组的多少就行元素的创建
+		let footer = null;
+		let section = null;
+		let {todoData,inputVal,view} =this.state;
+		let leftComplated = todoData.length;
+		let {onDestory,onClearCompleted,changeInputVal,onToggle,toggleAll,changeView} = this;
+
+		items = todoData.filter((el)=>{
+			if(el.hasCompleted){//循环的时候，将剩余的条数计算出来
+				leftComplated --;
+			}
+			switch(view){
+				case 'all' :
+					return true;
+					break;
+				case  'active' :
+					return !el.hasCompleted;
+					break;
+				case 'completed':
+				    return el.hasCompleted;
+			}
+		})
+
+		items = items.map((item,i)=>{// 根据数组的多少就行元素的创建
+			
 			return (//将列表相关的属性数据和方法传递到子组件中
-					 <Item onDestory={onDestory} todo={item}
-					  //{...{ 父组件向子组件传值的形式
-					  //	onDestory,
-					  //	todo:item
-					  //}}  
+					 <Item 
+					  {...{
+					  	onDestory,
+					  	todo:item,
+					  	onToggle,
+					  }}  
 					 key={i}/>
 				)
 		});
+
+		if(todoData.length){
+			footer=(
+				<Footer 
+				{...{
+					leftComplated,
+					onClearCompleted,
+					isShowBtn:leftComplated < todoData.length,
+					view,
+					changeView
+				}}/>
+			);
+			section=(
+			<section className='main'>
+           	   <input 
+           	   type="checkbox" 
+           	   className='toggle-all'
+           	   onChange={toggleAll}
+           	    />
+           	   <ul className='todo-list'> 
+	           	   {items}
+           	   </ul>
+           	</section>
+			)
+		}
 
 		return(
            <div>
@@ -88,13 +164,9 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
            		className='new-todo' 
            		/>	
            	</header>
-           	<section className='main'>
-           	   <input type="checkbox" className='toggle-all' />
-           	   <ul className='todo-list'> 
-	           	   {items}
-           	   </ul>
-           	</section>
-           	<Footer />
+			{section}
+			{footer}
+           
            </div>
 		)
 	}
