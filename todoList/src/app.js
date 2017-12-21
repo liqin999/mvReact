@@ -20,6 +20,7 @@ constructor(props) {
     this.toggleAll = this.toggleAll.bind(this);
     this.onToggle = this.onToggle.bind(this);
     this.changeView = this.changeView.bind(this);
+    this.itemEditDone = this.itemEditDone.bind(this);
     
  }
 
@@ -90,14 +91,23 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 	changeView(view){
         this.setState({view})
 	}
+	itemEditDone(todos,vals){
+		let {todoData} = this.state;
+		todoData.map((el)=>{
+			if(el.id == todos.id){
+				el.value = vals;
+			}
+			return el;
+		})
 
+	}
 	render(){//render是元素的渲染的到页面中的行为
 		let items = null;
 		let footer = null;
 		let section = null;
 		let {todoData,inputVal,view} =this.state;
 		let leftComplated = todoData.length;
-		let {onDestory,onClearCompleted,changeInputVal,onToggle,toggleAll,changeView} = this;
+		let {onDestory,onClearCompleted,changeInputVal,onToggle,toggleAll,changeView,itemEditDone} = this;
 
 		items = todoData.filter((el)=>{
 			if(el.hasCompleted){//循环的时候，将剩余的条数计算出来
@@ -123,6 +133,7 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 					  	onDestory,
 					  	todo:item,
 					  	onToggle,
+					  	itemEditDone,
 					  }}  
 					 key={i}/>
 				)
