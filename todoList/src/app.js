@@ -3,6 +3,11 @@ require("./common/style/index.css");
 
 import Item from 'components/Item';
 import Footer from 'components/Footer';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
 class App extends React.Component{
 
@@ -108,19 +113,21 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 		let {todoData,inputVal,view} =this.state;
 		let leftComplated = todoData.length;
 		let {onDestory,onClearCompleted,changeInputVal,onToggle,toggleAll,changeView,itemEditDone} = this;
-
+		let {match:{url},location} = this.props;
+		let pathname = location.pathname;
+		//通过地址栏的信息进行渲染视图
 		items = todoData.filter((el)=>{
 			if(el.hasCompleted){//循环的时候，将剩余的条数计算出来
 				leftComplated --;
 			}
-			switch(view){
-				case 'all' :
+			switch(pathname){
+				case '/' :
 					return true;
 					break;
-				case  'active' :
+				case  '/active' :
 					return !el.hasCompleted;
 					break;
-				case 'completed':
+				case '/completed':
 				    return el.hasCompleted;
 			}
 		})
@@ -146,8 +153,7 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 					leftComplated,
 					onClearCompleted,
 					isShowBtn:leftComplated < todoData.length,
-					view,
-					changeView
+					pathname
 				}}/>
 			);
 			section=(
@@ -173,18 +179,22 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
            		onChange={changeInputVal}
            		onKeyDown = {this.handleKeyDownPost} 
            		className='new-todo' 
+           		placeholder='type somethings here'
            		/>	
            	</header>
 			{section}
 			{footer}
-           
            </div>
 		)
 	}
 }
 
 ReactDOM.render(
-	<App />,
+  <Router>
+	  <div>
+	     <Route path="/" component={App}></Route>
+	  </div>
+  </Router>,
 	  document.getElementById('root')
 	);
 

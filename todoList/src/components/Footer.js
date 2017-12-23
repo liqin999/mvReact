@@ -1,11 +1,9 @@
+import {Link} from 'react-router-dom';
 let propTypes = {
-
 	leftComplated:PT.number,
 	onClearCompleted:PT.func,
 	isShowBtn:PT.bool,
-	view:PT.oneOf(['all','completed','active']),
-	changeView:PT.func,
-	
+	pathname:PT.string
 }
 	
 export default class Footer extends React.Component{
@@ -13,7 +11,7 @@ export default class Footer extends React.Component{
     super(props);
  }
 	render(){
-    let {leftComplated,isShowBtn,onClearCompleted,view,changeView} = this.props;
+    let {leftComplated,isShowBtn,onClearCompleted,pathname} = this.props;
 
     let showBtnComponent = null;
 
@@ -35,32 +33,14 @@ export default class Footer extends React.Component{
 					<span>item left</span>
 				</span>
 				<ul className="filters">
-					  <li>
-						<a 
-						href="#/all"
-						className={view == 'all' ? 'selected' :''}
-						onClick={()=>{
-							changeView('all')
-						}}
-						>All</a>
+					 <li>
+						<Link to="/" className={pathname === '/' ? 'selected' :''}>All</Link>
 					 </li>
 				     <li>
-						<a 
-						href="#/active"
-						className={view == 'active' ? 'selected' :''}
-						onClick={()=>{
-							changeView('active')
-						}}
-						>Active</a>
+				         <Link to="/active" className={pathname === '/active' ? 'selected' :''}>Active</Link>
 					 </li>
 					 <li>
-						<a 
-						href="#/completed"
-						className={view == 'completed' ? 'selected' :''}
-						onClick={()=>{
-						changeView('completed')
-						}}
-						>Completed</a>
+					    <Link to="/completed" className={pathname === '/completed' ? 'selected' :''}>Completed</Link>
 					 </li>
 				</ul>
 				{showBtnComponent}
