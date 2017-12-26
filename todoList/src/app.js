@@ -179,7 +179,7 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
            		onChange={changeInputVal}
            		onKeyDown = {this.handleKeyDownPost} 
            		className='new-todo' 
-           		placeholder='type somethings here'
+           		placeholder='type somethings here 1'
            		/>	
            	</header>
 			{section}

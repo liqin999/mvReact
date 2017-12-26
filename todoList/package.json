@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node server",
-    "dev": "NODE_ENV=dev webpack"
+    "dev": "webpack"
   },
   "repository": {},
   "author": "Noods",

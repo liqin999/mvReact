@@ -15,3 +15,9 @@
 关于 package.json
     * 在 devDependencies 里删除了对 browser-sync 的依赖: "browser-sync": "^2.18.8",
     我们并不用到此依赖
+
+## 关于打包和本地的运行   package.json 中的配置
+运行-node server:   "scripts"：{"dev": "NODE_ENV=dev webpack"} 
+打包-npm run dev    "scripts"：{"dev": "webpack"} 
+
+
