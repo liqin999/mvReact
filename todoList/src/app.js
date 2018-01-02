@@ -9,8 +9,14 @@ import {
   Link
 } from 'react-router-dom';
 
-class App extends React.Component{
+import {createStore} from 'redux'
+import {Provider,connect} from 'react-redux'
+import ReduxCon from 'redux/index.js';
+import todoApp from 'redux/Reducer.js';
+let store = createStore(todoApp);
 
+
+class App extends React.Component{
 constructor(props) {
     super(props);
     this.state={//数据的形式 id  value  hascompleted
@@ -189,12 +195,16 @@ handleKeyDownPost(ev){// 在文本框按下enter键的时候执行 s定义数据
 	}
 }
 
+
 ReactDOM.render(
-  <Router>
-	  <div>
-	     <Route path="/" component={App}></Route>
-	  </div>
-  </Router>,
+ <Provider store={store}>
+	  <Router>
+		  <div>
+		      <Route path="/" exact component={App}></Route>
+		      <Route path="/user" component={ReduxCon}></Route>
+		  </div>
+	  </Router>
+  </Provider>,
 	  document.getElementById('root')
 	);
 
